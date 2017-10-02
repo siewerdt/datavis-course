@@ -21,11 +21,11 @@
                 .data(data)
             .attr("class", "h-bar")
             .style("width", function (d) {
-                return (d.despesa * 10) + "px";
+                return (d.Worlwide_Gross_M/4) + "px";
             })
             .select("span")
                 .text(function (d) {
-                    return d.categoria;
+                    return d.Film;
                 });
          if(comparator)
             d3.select("body")
@@ -33,15 +33,15 @@
                 .sort(comparator);
     }
 
-    var comparePorDespesa = function (a, b) { 
-        return a.despesa < b.despesa?-1:1;
+    var comparePorBilheteria = function (a, b) { 
+        return a.Worlwide_Gross_M < b.Worlwide_Gross_M?-1:1;
     };
-    var comparePorCategoria = function (a, b) { 
-        return a.categoria < b.categoria?-1:1;
+    var comparePorBilheteria = function (a, b) { 
+        return a.Worlwide_Gross_M > b.Worlwide_Gross_M?-1:1;
     };
     
-    d3.json("data.json", function(error, json){ 
-        render(json, comparePorCategoria);
+    d3.json("movies.json", function(error, json){ 
+        render(json, comparePorBilheteria);
     });
 </script>
 </body>

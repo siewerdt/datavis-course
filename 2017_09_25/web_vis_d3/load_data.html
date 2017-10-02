@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Carregando dados de arquivo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+
+<body>
+    <div id="chart_gross">
+        <h1>Maiores Bilheterias</h1>
+    </div>
+
+    <div id="chart_budget">
+        <h1>Maiores Orçamentos</h1>
+    </div>
+
+    <div id="chart_profit">
+        <h1>Maiores Lucros</h1>
+    </div>
+
+    <script type="text/javascript">
+        function renderGross(data, comparator) {
+            d3.select("#chart_gross").selectAll("div.h-bar")
+                    .data(data)
+                .enter().append("div")
+                .attr("class", "h-bar")
+                .append("span");
+            
+            d3.select("#chart_gross").selectAll("div.h-bar")
+                    .data(data)
+                .attr("class", "h-bar")
+                .style("width", function (d) {
+                    return (d.Worldwide_Gross_M/2) + "px";
+                })
+                .style("background-color", function(d){
+                    return "#6f5977";
+                })
+                .select("span")
+                    .text(function (d) {
+                        return d.Film + "(" + d.Worldwide_Gross_M +")";
+                    });
+                if(comparator)
+                    d3.select("#chart_gross")
+                .selectAll("div.h-bar")
+                .sort(comparator);
+        }
+
+        function renderBudget(data, comparator) {
+            d3.select("#chart_budget").selectAll("div.h-bar")
+                    .data(data)
+                .enter().append("div")
+                .attr("class", "h-bar")
+                .append("span");
+            
+            d3.select("#chart_budget").selectAll("div.h-bar")
+                    .data(data)
+                .attr("class", "h-bar")
+                .style("width", function (d) {
+                    return (d.Budget_M*2) + "px";
+                })
+                .style("background-color", function(d){
+                    return "#00b9ae";
+                })
+                .select("span")
+                    .text(function (d) {
+                        return d.Film + "(" + d.Budget_M +")";
+                    });
+                if(comparator)
+                    d3.select("#chart_budget")
+                .selectAll("div.h-bar")
+                .sort(comparator);
+        }
+
+        function renderProfit(data, comparator) {
+            d3.select("#chart_profit").selectAll("div.h-bar")
+                    .data(data)
+                .enter().append("div")
+                .attr("class", "h-bar")
+                .append("span");
+            
+            d3.select("#chart_profit").selectAll("div.h-bar")
+                    .data(data)
+                .attr("class", "h-bar")
+                .style("width", function (d) {
+                    return (d.Worldwide_Gross_M - d.Budget_M)/2 + "px";
+                })
+                .style("background-color", function(d){
+                    return "#f68370";
+                })
+                .select("span")
+                    .text(function (d) {
+                        var profit = d.Worldwide_Gross_M - d.Budget_M;
+                        return d.Film + "(" + profit +")";
+                    });
+                if(comparator)
+                    d3.select("#chart_profit")
+                .selectAll("div.h-bar")
+                .sort(comparator);
+        }
+
+        var compareByGross = function (a, b) { 
+            return a.Worldwide_Gross_M > b.Worldwide_Gross_M?-1:1;
+        };
+
+        var compareByBudget = function (a, b) { 
+            return a.Budget_M > b.Budget_M?-1:1;
+        };
+
+        var compareByProfit = function (a, b) { 
+            return (a.Worldwide_Gross_M - a.Budget_M) > (b.Worldwide_Gross_M - b.Budget_M)?-1:1;
+        };
+        
+        d3.json("movies.json", function(error, json){ 
+            renderGross(json, compareByGross);
+            renderBudget(json, compareByBudget);
+            renderProfit(json, compareByProfit);
+        });
+
+    </script>
+
+</body>
+</html>
