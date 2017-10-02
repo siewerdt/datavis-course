@@ -26,32 +26,9 @@ h1 {
 }
 
 
-.gross-bar {
+.h-bar {
     min-height: 15px;
     min-width: 10px;
-    background-color: #6f5977;
-    margin-bottom: 2px;
-    font-size: 11px;
-    color: #f0f8ff;
-    text-align: right;
-    padding-right: 2px;
-}
-
-.budget-bar {
-    min-height: 15px;
-    min-width: 10px;
-    background-color: #00b9ae;
-    margin-bottom: 2px;
-    font-size: 11px;
-    color: #f0f8ff;
-    text-align: right;
-    padding-right: 2px;
-}
-
-.profit-bar {
-    min-height: 15px;
-    min-width: 10px;
-    background-color: #f68370;
     margin-bottom: 2px;
     font-size: 11px;
     color: #f0f8ff;
