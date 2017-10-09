@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Carregando dados de um arquivo csv</title>
+    <link rel="stylesheet" href="css/dc.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/crossfilter.js" charset="utf-8"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script src="js/dc.js" charset="utf-8"></script>
+
+</head>
+<body>
+     <div><h1> Valores das ações da Apple e do Facebook</h1>
+        <div id="chart_gross_by_year"></div>
+    </div>
+	<script type="text/javascript">
+        var compositeChart = dc.barChart('#chart_gross_by_year');
+
+		d3.json("movies.json", function(data){
+            // formatando nossos dados ja que os dados sao carregados como texto
+            var dtgFormat = d3.time.format("%Y");
+            data.forEach(function(d){
+                d.date = dtgFormat.parse(d.date); // data
+                d.Worldwide_Gross_M = +d.Worldwide_Gross_M; //numerico
+                d.Budget_M = +d.Budget_M; // numerico
+            });
+
+             //criando um crossfilter
+            var facts = crossfilter(data);
+
+        });
+    </script>           
+</body>
+</html>
